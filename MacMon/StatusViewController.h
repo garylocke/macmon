@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import "Host.h"
+#import "Service.h"
 
 @interface StatusViewController : NSObject <NSOutlineViewDataSource>
 
-@property (copy) NSMutableArray *hosts;
++(NSMutableArray *)hosts;
++(void)setHosts:(NSMutableArray *)hostsArray;
+
++(NSMutableArray *)services;
++(void)setServices:(NSMutableArray *)servicesArray;
 
 @end

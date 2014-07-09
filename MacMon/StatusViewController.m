@@ -10,21 +10,13 @@
 
 @implementation StatusViewController
 
+static NSMutableArray *hosts;
+static NSMutableArray *services;
+
+// Initalize View Controller (should not happen until hosts/services arrays are populated).
 -(id)init{
     self = [super init];
     if(self){
-        
-        // Array to store hosts.
-        _hosts = [[NSMutableArray alloc] init];
-        
-        // Example host.
-        Host *host1 = [[Host alloc] initWithName:@"host_name1" current_state:@"GOOD" attempt:@"1" lastUpdated:@"12345"];
-        
-        // Example dictionary of checks to add to host.
-        NSMutableArray *services = [NSMutableArray arrayWithObjects:
-                             [[Host alloc] initWithName:@"service1" current_state:@"GOOD" attempt:@"3" lastUpdated:@"673546"],
-                             [[Host alloc] initWithName:@"service2" current_state:@"OHGODWHY" attempt:@"2" lastUpdated:@"123353545"],
-                             nil];
         
         // Adding checks array to host.
         [host1 setChildren:services];
@@ -35,6 +27,34 @@
     return self;
 }
 
+/*
+ * Set children for Hosts by matching hostnames from each service.
+ */
+-(void)setHostChildrenFromServices{
+    for(Host *host in hosts){
+        NSMutableArray *children;
+        for(NSDictionary *service in services){
+            for(NSString *key in service){
+                if([service[key] isEqualToString:@"host_name"]){
+                    if([[service valueForKey:key] isEqualToString:[host valueForKey:@"host_name"]]){
+                        [children addObject:service];
+                    }
+                }
+            }
+        }
+        [host setChildren:children];
+    }
+}
+
+/*
+ * Static methods to set hosts and services arrays.
+ */
++(void)setHosts:(NSArray *)hostsArray{
+    hosts = [hostsArray copy];
+}
++(void)setServices:(NSArray *)servicesArray{
+    services = [servicesArray copy];
+}
 
 /*
  * Methods called as the data source for the NSOutlineView.

@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "StatusViewController.h"
 #import "Host.h"
 #import "Service.h"
 
@@ -96,6 +97,11 @@ BOOL isConnected;
                     }
                 }
             }
+            
+            // Set static array values in StatusViewController class.
+            StatusViewController.hosts = hosts;
+            StatusViewController.services = services;
+            
         }] resume];
     }
 }

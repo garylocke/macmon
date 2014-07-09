@@ -10,6 +10,8 @@
 
 @implementation Host
 
+@synthesize children;
+
 -(id)initWithDictionary:(NSDictionary *)hostData{
     self = [super init];
     if(self){
