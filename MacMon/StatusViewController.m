@@ -18,12 +18,12 @@
         _hosts = [[NSMutableArray alloc] init];
         
         // Example host.
-        Host *host1 = [[Host alloc] initWithName:@"host_name1" lastUpdated:@"12345"];
+        Host *host1 = [[Host alloc] initWithName:@"host_name1" status_value:@"GOOD" attempt:@"1" lastUpdated:@"12345"];
         
         // Example dictionary of checks to add to host.
         NSMutableArray *services = [NSMutableArray arrayWithObjects:
-                             [[Host alloc] initWithName:@"service1" lastUpdated:@"673546"],
-                             [[Host alloc] initWithName:@"service2" lastUpdated:@"123353545"],
+                             [[Host alloc] initWithName:@"service1" status_value:@"GOOD" attempt:@"3" lastUpdated:@"673546"],
+                             [[Host alloc] initWithName:@"service2" status_value:@"OHGODWHY" attempt:@"2" lastUpdated:@"123353545"],
                              nil];
         
         // Adding checks array to host.
@@ -50,6 +50,10 @@
 -(id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item{
     if([[tableColumn identifier] isEqualToString:@"host_name"])
         return [item name];
+    else if([[tableColumn identifier] isEqualToString:@"status_value"])
+        return [item status_value];
+    else if([[tableColumn identifier] isEqualToString:@"attempt"])
+        return [item attempt];
     else if([[tableColumn identifier] isEqualToString:@"last_updated"])
         return [item lastUpdated];
     return @"Toasty!";
