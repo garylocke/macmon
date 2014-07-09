@@ -20,6 +20,7 @@
 		36308073196B2DF7008D0426 /* MacMonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36308072196B2DF7008D0426 /* MacMonTests.m */; };
 		36308081196D848A008D0426 /* Host.m in Sources */ = {isa = PBXBuildFile; fileRef = 36308080196D848A008D0426 /* Host.m */; };
 		36308084196D8A6B008D0426 /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36308083196D8A6B008D0426 /* StatusViewController.m */; };
+		C0D1CAA8196DC8BC00C5C988 /* Service.m in Sources */ = {isa = PBXBuildFile; fileRef = C0D1CAA7196DC8BC00C5C988 /* Service.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		36308080196D848A008D0426 /* Host.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Host.m; sourceTree = "<group>"; };
 		36308082196D8A6B008D0426 /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
 		36308083196D8A6B008D0426 /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
+		C0D1CAA6196DC8BC00C5C988 /* Service.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Service.h; sourceTree = "<group>"; };
+		C0D1CAA7196DC8BC00C5C988 /* Service.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Service.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 		3630804E196B2DF7008D0426 /* MacMon */ = {
 			isa = PBXGroup;
 			children = (
+				C0D1CAA6196DC8BC00C5C988 /* Service.h */,
+				C0D1CAA7196DC8BC00C5C988 /* Service.m */,
 				3630805B196B2DF7008D0426 /* AppDelegate.m */,
 				3630805A196B2DF7008D0426 /* AppDelegate.h */,
 				3630805D196B2DF7008D0426 /* MainMenu.xib */,
@@ -264,6 +269,7 @@
 			files = (
 				36308084196D8A6B008D0426 /* StatusViewController.m in Sources */,
 				3630805C196B2DF7008D0426 /* AppDelegate.m in Sources */,
+				C0D1CAA8196DC8BC00C5C988 /* Service.m in Sources */,
 				36308055196B2DF7008D0426 /* main.m in Sources */,
 				36308081196D848A008D0426 /* Host.m in Sources */,
 			);
