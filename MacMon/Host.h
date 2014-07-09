@@ -12,10 +12,9 @@
 
 @property (copy) NSString *name;
 @property (copy) NSMutableArray *children;
-@property (copy) NSString *status_value;
+@property (copy) NSString *currentState;
 @property (copy) NSString *attempt;
 @property (copy) NSString *lastUpdated;
 
--(id)initWithName:(NSString *)name status_value:(NSString *)status_value attempt:(NSString *)attempt lastUpdated:(NSString *)lastUpdated;
-
+-(id)initWithDictionary:(NSDictionary *)hostData;
 @end

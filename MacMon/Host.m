@@ -10,14 +10,20 @@
 
 @implementation Host
 
--(id)initWithName:(NSString *)name status_value:(NSString *)status_value attempt:(NSString *)attempt lastUpdated:(NSString *)lastUpdated{
+-(id)initWithDictionary:(NSDictionary *)hostData{
     self = [super init];
     if(self){
-        _name = [name copy];
-        _children = [[NSMutableArray alloc] init];
-        _status_value = [status_value copy];
-        _attempt = [attempt copy];
-        _lastUpdated = [lastUpdated copy];
+        for(NSString * key in hostData){
+            if([key isEqualToString:@"host_name"]){
+                _name = [hostData valueForKey:key];
+            } else if([key isEqualToString:@"current_state"]){
+                _currentState = [hostData valueForKey:key];
+            } else if([key isEqualToString:@"current_attempt"]){
+                _attempt = [hostData valueForKey:key];
+            } else if([key isEqualToString:@"last_update"]){
+                _lastUpdated = [hostData valueForKey:key];
+            }
+        }
     }
     return self;
 }

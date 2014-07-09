@@ -121,8 +121,8 @@
 		3630804E196B2DF7008D0426 /* MacMon */ = {
 			isa = PBXGroup;
 			children = (
-				3630805B196B2DF7008D0426 /* AppDelegate.m */,
 				3630805A196B2DF7008D0426 /* AppDelegate.h */,
+				3630805B196B2DF7008D0426 /* AppDelegate.m */,
 				3630805D196B2DF7008D0426 /* MainMenu.xib */,
 				3630807F196D848A008D0426 /* Host.h */,
 				36308080196D848A008D0426 /* Host.m */,

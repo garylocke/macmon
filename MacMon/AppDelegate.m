@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "Host.h"
+#import "Service.h"
 
 @implementation AppDelegate
 
@@ -72,46 +74,26 @@ BOOL isConnected;
             NSError *err = nil;
             NSDictionary *statusDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
 
+            // Array to contain all Host instances.
+            NSMutableArray *hosts;
+            
+            // Array to contain all Service instances.
+            NSMutableArray *services;
+            
             // Outer objects (containing hosts or services)
             for(NSString *iKey in statusDictionary)
             {
-                id iVal = [statusDictionary objectForKey:iKey];
-                if([iVal isKindOfClass:[NSDictionary class]])
-                {
-                    // Individual hosts/services and their check data
-                    for(NSString *jKey in iVal)
-                    {
-                        id jVal = [iVal objectForKey:jKey];
-                        if([jVal isKindOfClass:[NSDictionary class]])
-                        {
-                            // Check properties
-                            for(NSString *kKey in jVal)
-                            {
-                                id kVal = [jVal objectForKey:kKey];
-                                if([kVal isKindOfClass:[NSDictionary class]])
-                                {
-                                    // Property shouldn't be a dictionary but you never know.
-                                    for(NSString *lKey in kVal)
-                                    {
-                                        id lVal = [kVal objectForKey:lKey];
-                                        NSLog(@"%@: %@",lKey,lVal);
-                                    }
-                                }
-                                else
-                                {
-                                    NSLog(@"%@: %@",kKey,kVal);
-                                }
-                            }
-                        }
-                        else if([jVal isKindOfClass:[NSString class]])
-                        {
-                            NSLog(@"%@: %@",jKey,jVal);
-                        }
+                NSLog(@"%@",iKey);
+                if([iKey isEqualToString:@"hosts"]){
+                    for(NSDictionary *host in statusDictionary[iKey]){
+                        Host *newHost = [[Host alloc] initWithDictionary:host];
+                        [hosts addObject:newHost];
                     }
-                }
-                else if([iVal isKindOfClass:[NSString class]])
-                {
-                    NSLog(@"%@: %@",iKey,iVal);
+                } else if([iKey isEqualToString:@"services"]){
+                    for(NSDictionary *service in statusDictionary[iKey]){
+                        Service *newService = [[Service alloc] initWithDictionary:service];
+                        [services addObject:newService];
+                    }
                 }
             }
         }] resume];
