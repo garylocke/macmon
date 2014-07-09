@@ -10,17 +10,11 @@
 
 @implementation AppDelegate
 
-@synthesize serverUrl;
-@synthesize username;
-@synthesize password;
-@synthesize output;
-
 NSURLConnection *urlConnection;
 
 NSString *serverUrlString;
 NSString *usernameString;
 NSString *passwordString;
-NSString *output;
 
 NSString *statusUrl;
 

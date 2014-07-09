@@ -18,6 +18,8 @@
 		36308069196B2DF7008D0426 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36308048196B2DF6008D0426 /* Cocoa.framework */; };
 		36308071196B2DF7008D0426 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3630806F196B2DF7008D0426 /* InfoPlist.strings */; };
 		36308073196B2DF7008D0426 /* MacMonTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 36308072196B2DF7008D0426 /* MacMonTests.m */; };
+		36308081196D848A008D0426 /* Host.m in Sources */ = {isa = PBXBuildFile; fileRef = 36308080196D848A008D0426 /* Host.m */; };
+		36308084196D8A6B008D0426 /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 36308083196D8A6B008D0426 /* StatusViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +52,10 @@
 		3630806E196B2DF7008D0426 /* MacMonTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MacMonTests-Info.plist"; sourceTree = "<group>"; };
 		36308070196B2DF7008D0426 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		36308072196B2DF7008D0426 /* MacMonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MacMonTests.m; sourceTree = "<group>"; };
+		3630807F196D848A008D0426 /* Host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Host.h; sourceTree = "<group>"; };
+		36308080196D848A008D0426 /* Host.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Host.m; sourceTree = "<group>"; };
+		36308082196D8A6B008D0426 /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
+		36308083196D8A6B008D0426 /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,9 +121,13 @@
 		3630804E196B2DF7008D0426 /* MacMon */ = {
 			isa = PBXGroup;
 			children = (
-				3630805A196B2DF7008D0426 /* AppDelegate.h */,
 				3630805B196B2DF7008D0426 /* AppDelegate.m */,
+				3630805A196B2DF7008D0426 /* AppDelegate.h */,
 				3630805D196B2DF7008D0426 /* MainMenu.xib */,
+				3630807F196D848A008D0426 /* Host.h */,
+				36308080196D848A008D0426 /* Host.m */,
+				36308082196D8A6B008D0426 /* StatusViewController.h */,
+				36308083196D8A6B008D0426 /* StatusViewController.m */,
 				36308060196B2DF7008D0426 /* Images.xcassets */,
 				3630804F196B2DF7008D0426 /* Supporting Files */,
 			);
@@ -252,8 +262,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				36308084196D8A6B008D0426 /* StatusViewController.m in Sources */,
 				3630805C196B2DF7008D0426 /* AppDelegate.m in Sources */,
 				36308055196B2DF7008D0426 /* main.m in Sources */,
+				36308081196D848A008D0426 /* Host.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,6 +478,7 @@
 				36308078196B2DF7008D0426 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		36308079196B2DF7008D0426 /* Build configuration list for PBXNativeTarget "MacMonTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +487,7 @@
 				3630807B196B2DF7008D0426 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

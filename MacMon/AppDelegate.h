@@ -15,7 +15,6 @@
 @property (weak) IBOutlet NSTextField *serverUrl;
 @property (weak) IBOutlet NSTextField *username;
 @property (weak) IBOutlet NSSecureTextField *password;
-@property (weak) IBOutlet NSTextField *output;
 
 - (IBAction)connect:(id)sender;
 - (IBAction)dataButton:(id)sender;
