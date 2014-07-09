@@ -74,24 +74,50 @@ BOOL isConnected;
         
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
-            //NSLog(@"%@",response);
-            
-            //NSString *dataString = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
-            //NSLog(@"%@",dataString);
 
             NSError *err = nil;
             NSDictionary *statusDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
 
-//            NSDictionary *hosts = [statusDictionary objectForKey:@"hosts"];
-//            NSDictionary *firstHostValue = [hosts valueForKey:@"micro.synergeticmarketing.net"];
-//            NSString *hostName = [firstHostValue valueForKey:@"host_name"];
-
-            for(NSString *key in statusDictionary){
-                id value = [statusDictionary objectForKey:key];
-                if([value isKindOfClass:[NSDictionary class]]){
-                    NSLog(@"dictionary found");
-                } else if([value isKindOfClass:[NSString class]]){
-                    NSLog(@"string found");
+            // Outer objects (containing hosts or services)
+            for(NSString *iKey in statusDictionary)
+            {
+                id iVal = [statusDictionary objectForKey:iKey];
+                if([iVal isKindOfClass:[NSDictionary class]])
+                {
+                    // Individual hosts/services and their check data
+                    for(NSString *jKey in iVal)
+                    {
+                        id jVal = [iVal objectForKey:jKey];
+                        if([jVal isKindOfClass:[NSDictionary class]])
+                        {
+                            // Check properties
+                            for(NSString *kKey in jVal)
+                            {
+                                id kVal = [jVal objectForKey:kKey];
+                                if([kVal isKindOfClass:[NSDictionary class]])
+                                {
+                                    // Property shouldn't be a dictionary but you never know.
+                                    for(NSString *lKey in kVal)
+                                    {
+                                        id lVal = [kVal objectForKey:lKey];
+                                        NSLog(@"%@: %@",lKey,lVal);
+                                    }
+                                }
+                                else
+                                {
+                                    NSLog(@"%@: %@",kKey,kVal);
+                                }
+                            }
+                        }
+                        else if([jVal isKindOfClass:[NSString class]])
+                        {
+                            NSLog(@"%@: %@",jKey,jVal);
+                        }
+                    }
+                }
+                else if([iVal isKindOfClass:[NSString class]])
+                {
+                    NSLog(@"%@: %@",iKey,iVal);
                 }
             }
         }] resume];
