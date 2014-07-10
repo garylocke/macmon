@@ -73,30 +73,31 @@ BOOL isConnected;
         [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
 
             NSError *err = nil;
-            NSDictionary *statusDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
-
-            // Array to contain all Host instances.
-            NSMutableArray *hosts;
+            NSDictionary *hostData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
             
-            // Array to contain all Service instances.
-            NSMutableArray *services;
+            // Array to contain all Host instances.
+            NSMutableArray *hosts = [[NSMutableArray alloc] init];
             
             // Outer objects (containing hosts or services)
-            for(NSString *iKey in statusDictionary)
+            for(NSArray *host in hostData)
             {
-                NSLog(@"%@",iKey);
-                if([iKey isEqualToString:@"hosts"]){
-                    for(NSDictionary *host in statusDictionary[iKey]){
+                if([key isEqualToString:@"hosts"])
+                {
+                    for(NSString *hostName in [hostData objectForKey:key])
+                    {
+                        NSDictionary *host = [[hostData objectForKey:key] objectForKey:hostName];
                         Host *newHost = [[Host alloc] initWithDictionary:host];
-                        [hosts addObject:newHost];
-                    }
-                } else if([iKey isEqualToString:@"services"]){
-                    for(NSDictionary *service in statusDictionary[iKey]){
-                        Service *newService = [[Service alloc] initWithDictionary:service];
-                        [services addObject:newService];
+                       [hosts addObject:newHost];
                     }
                 }
             }
+            
+            // For each serv
+ 
+            }
+            
+//            NSLog(@"%lu hosts added",[hosts count]);
+//            NSLog(@"%lu services added",[services count]);
             
             // Set static array values in StatusViewController class.
             StatusViewController.hosts = hosts;

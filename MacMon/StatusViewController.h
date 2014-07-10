@@ -18,4 +18,6 @@
 +(NSMutableArray *)services;
 +(void)setServices:(NSMutableArray *)servicesArray;
 
+-(void)setHostChildrenFromServices;
+
 @end
