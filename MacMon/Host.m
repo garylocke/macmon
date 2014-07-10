@@ -17,13 +17,13 @@
     if(self){
         for(NSString * key in hostData){
             if([key isEqualToString:@"host_name"]){
-                _name = [hostData valueForKey:key];
+                self.name = [hostData valueForKey:key];
             } else if([key isEqualToString:@"current_state"]){
-                _currentState = [hostData valueForKey:key];
+                self.currentState = [hostData valueForKey:key];
             } else if([key isEqualToString:@"current_attempt"]){
-                _attempt = [hostData valueForKey:key];
+                self.attempt = [hostData valueForKey:key];
             } else if([key isEqualToString:@"last_update"]){
-                _lastUpdated = [hostData valueForKey:key];
+                self.lastUpdated = [hostData valueForKey:key];
             }
         }
     }
