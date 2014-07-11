@@ -39,10 +39,6 @@ BOOL isConnected;
     urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 }
 
-- (IBAction)dataButton:(id)sender {
-    [self getServerStatusData];
-}
-
 - (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
     if ([challenge previousFailureCount] > 1)
     {
@@ -57,7 +53,8 @@ BOOL isConnected;
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
     isConnected = true;
-    NSLog(@"Connected");
+    NSLog(@"Connected!");
+    [self getServerStatusData];
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
@@ -66,42 +63,38 @@ BOOL isConnected;
 
 - (void)getServerStatusData{
     if(isConnected){
+        
+        NSLog(@"Getting data...");
+        
+        // Get status URL in string format for request and build URL.
         NSString *urlString = [NSString stringWithFormat:@"%@",statusUrl];
         NSURL *url = [NSURL URLWithString:urlString];
         
+        // Open session and get data for request.
         NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
 
+            // Retrieve JSON data and store in NSDictionary object.
             NSError *err = nil;
             NSDictionary *hostData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
             
             // Array to contain all Host instances.
             NSMutableArray *hosts = [[NSMutableArray alloc] init];
             
-            // Outer objects (containing hosts or services)
-            for(NSArray *host in hostData)
+            NSLog(@"Processing...");
+            
+            // Loop through hosts, creating a Host instance for each.
+            for(NSDictionary *host in hostData)
             {
-                if([key isEqualToString:@"hosts"])
-                {
-                    for(NSString *hostName in [hostData objectForKey:key])
-                    {
-                        NSDictionary *host = [[hostData objectForKey:key] objectForKey:hostName];
-                        Host *newHost = [[Host alloc] initWithDictionary:host];
-                       [hosts addObject:newHost];
-                    }
-                }
+                Host *newHost = [[Host alloc] initWithDictionary:host];
+                [hosts addObject:newHost];
             }
             
-            // For each serv
- 
-            }
-            
-//            NSLog(@"%lu hosts added",[hosts count]);
-//            NSLog(@"%lu services added",[services count]);
+            NSLog(@"Retrieved data for %lu host(s).",[hosts count]);
             
             // Set static array values in StatusViewController class.
             StatusViewController.hosts = hosts;
-            StatusViewController.services = services;
+            //StatusViewController.services = services;
             
         }] resume];
     }

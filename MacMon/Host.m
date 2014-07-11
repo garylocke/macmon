@@ -10,8 +10,6 @@
 
 @implementation Host
 
-@synthesize children;
-
 -(id)initWithDictionary:(NSDictionary *)hostData{
     self = [super init];
     if(self){
@@ -24,6 +22,8 @@
                 self.attempt = [hostData valueForKey:key];
             } else if([key isEqualToString:@"last_update"]){
                 self.lastUpdated = [hostData valueForKey:key];
+            } else if ([key isEqualToString:@"services"]){
+                NSLog(@"Host has %lu services.",[[hostData valueForKey:key] count]);
             }
         }
     }

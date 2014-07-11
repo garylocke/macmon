@@ -17,6 +17,5 @@
 @property (weak) IBOutlet NSSecureTextField *password;
 
 - (IBAction)connect:(id)sender;
-- (IBAction)dataButton:(id)sender;
 
 @end

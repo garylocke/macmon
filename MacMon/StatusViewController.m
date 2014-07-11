@@ -11,32 +11,12 @@
 @implementation StatusViewController
 
 static NSMutableArray *hosts;
-static NSMutableArray *services;
 
 // Initalize View Controller (should not happen until hosts/services arrays are populated).
 -(id)init{
     self = [super init];
     if(self){}
     return self;
-}
-
-/*
- * Set children for Hosts by matching hostnames from each service.
- */
--(void)setHostChildrenFromServices{
-    for(Host *host in hosts){
-        NSMutableArray *children;
-        for(NSDictionary *service in services){
-            for(NSString *key in service){
-                if([service[key] isEqualToString:@"host_name"]){
-                    if([[service valueForKey:key] isEqualToString:[host valueForKey:@"host_name"]]){
-                        [children addObject:service];
-                    }
-                }
-            }
-        }
-        [host setChildren:children];
-    }
 }
 
 /*
@@ -47,12 +27,6 @@ static NSMutableArray *services;
 }
 +(void)setHosts:(NSArray *)hostsArray{
     hosts = [hostsArray copy];
-}
-+(NSMutableArray *)services{
-    return services;
-}
-+(void)setServices:(NSArray *)servicesArray{
-    services = [servicesArray copy];
 }
 
 /*

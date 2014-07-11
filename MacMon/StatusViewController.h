@@ -15,9 +15,4 @@
 +(NSMutableArray *)hosts;
 +(void)setHosts:(NSMutableArray *)hostsArray;
 
-+(NSMutableArray *)services;
-+(void)setServices:(NSMutableArray *)servicesArray;
-
--(void)setHostChildrenFromServices;
-
 @end

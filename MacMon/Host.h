@@ -11,7 +11,7 @@
 @interface Host : NSObject
 
 @property (copy) NSString *name;
-@property (copy) NSMutableArray *children;
+@property (copy) NSMutableArray *services;
 @property (copy) NSString *currentState;
 @property (copy) NSString *attempt;
 @property (copy) NSString *lastUpdated;
