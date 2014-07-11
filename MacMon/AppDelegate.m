@@ -90,7 +90,7 @@ BOOL isConnected;
                 [hosts addObject:newHost];
             }
             
-            NSLog(@"Retrieved data for %lu host(s).",[hosts count]);
+            NSLog(@"Retrieved service data for %lu host(s).",[hosts count]);
             
             // Set static array values in StatusViewController class.
             StatusViewController.hosts = hosts;

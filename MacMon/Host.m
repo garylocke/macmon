@@ -23,7 +23,13 @@
             } else if([key isEqualToString:@"last_update"]){
                 self.lastUpdated = [hostData valueForKey:key];
             } else if ([key isEqualToString:@"services"]){
-                NSLog(@"Host has %lu services.",[[hostData valueForKey:key] count]);
+                NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+                [dict setObject:@"serviceName" forKey:@"name"];
+                [dict setObject:@"serviceState" forKey:@"current_state"];
+                [dict setObject:@"serviceAttempt" forKey:@"attempt"];
+                [dict setObject:@"serviceUpdated" forKey:@"last_updated"];
+                self.services = [[NSMutableArray alloc] initWithObjects:dict, nil];
+                NSLog(@"Adding %lu services.",[[hostData valueForKey:key] count]);
             }
         }
     }
