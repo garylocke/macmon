@@ -11,10 +11,10 @@
 @interface Host : NSObject
 
 @property (copy) NSString *name;
-@property (copy) NSMutableArray *services;
+@property NSMutableArray *services;
 @property (copy) NSString *currentState;
-@property (copy) NSString *attempt;
-@property (copy) NSString *lastUpdated;
+@property (copy) NSString *currentAttempt;
+@property (copy) NSString *lastUpdate;
 
 -(id)initWithDictionary:(NSDictionary *)hostData;
 @end

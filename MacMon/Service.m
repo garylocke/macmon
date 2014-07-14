@@ -15,16 +15,16 @@
     
     if(self){
         for(NSString *key in serviceData){
-            if([key isEqualToString:@"host_name"]){
-                self.hostName = [serviceData valueForKey:key];
+            if([key isEqualToString:@"service_description"]){
+                self.name = [serviceData valueForKey:key];
             } else if([key isEqualToString:@"current_state"]){
                 self.currentState = [serviceData valueForKey:key];
             } else if([key isEqualToString:@"plugin_ouput"]){
-                self.currentStateDetails = [serviceData valueForKey:key];
-            }else if([key isEqualToString:@"attempt"]){
-                self.attempt = [serviceData valueForKey:key];
+                self.pluginOutput = [serviceData valueForKey:key];
+            }else if([key isEqualToString:@"current_attempt"]){
+                self.currentAttempt = [serviceData valueForKey:key];
             } else if([key isEqualToString:@"last_update"]){
-                self.lastUpdated = [serviceData valueForKey:key];
+                self.lastUpdate = [serviceData valueForKey:key];
             }
         }
     }

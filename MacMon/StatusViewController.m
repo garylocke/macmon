@@ -10,57 +10,176 @@
 
 @implementation StatusViewController
 
-static NSMutableArray *hosts;
+NSURLConnection *urlConnection;
+
+NSString *serverUrlString;
+NSString *usernameString;
+NSString *passwordString;
+
+NSString *statusUrl;
+
+BOOL isConnected;
+
+@synthesize statusTable;
+
+NSMutableArray *hosts;
 
 // Initalize View Controller (should not happen until hosts/services arrays are populated).
 -(id)init{
     self = [super init];
-    if(self){}
+    if(self){
+    
+        // Array to store hosts.
+        hosts = [[NSMutableArray alloc] init];
+        
+        // Sample host.
+        NSMutableDictionary *host1Dict = [[NSMutableDictionary alloc] initWithCapacity:4];
+        [host1Dict setObject:@"Sample Host" forKey:@"host_name"];
+        [host1Dict setObject:@"Good" forKey:@"current_state"];
+        [host1Dict setObject:@"1" forKey:@"current_attempt"];
+        [host1Dict setObject:@"00:00:00" forKey:@"last_update"];
+        
+        Host *host1 = [[Host alloc] initWithDictionary:host1Dict];
+        
+        // Sample dictionary of checks to add to host.
+        NSMutableDictionary *serv1Dict = [[NSMutableDictionary alloc] initWithCapacity:4];
+        [serv1Dict setObject:@"service_description Service" forKey:@"Sample Service"];
+        [serv1Dict setObject:@"current_state" forKey:@"Bad"];
+        [serv1Dict setObject:@"current_attempt" forKey:@"3"];
+        [serv1Dict setObject:@"last_update" forKey:@"00:00:00"];
+        
+        NSMutableArray *services = [NSMutableArray arrayWithObjects:
+                                    [[Host alloc] initWithDictionary:serv1Dict],
+                                    nil];
+        
+        // Adding checks array to sample host.
+        [host1 setServices:services];
+        
+        // Add sample host to hosts array.
+        [hosts addObject:host1];
+    
+    
+    }
     return self;
 }
 
-/*
- * Static methods to set hosts and services arrays.
- */
-+(NSMutableArray *)hosts{
-    return hosts;
+// Called when the Connect button is clicked.
+// TODO: Add form validation.
+- (IBAction)connect:(id)sender {
+    
+    serverUrlString = [NSString stringWithFormat:@"%@",[self.serverUrl stringValue]];
+    usernameString = [NSString stringWithFormat:@"%@",[self.username stringValue]];
+    passwordString = [NSString stringWithFormat:@"%@",[self.password stringValue]];
+    
+    statusUrl = [NSString stringWithFormat:@"%@/rss/rss.json",[self.serverUrl stringValue]];
+    
+    NSURL *url = [NSURL URLWithString:serverUrlString];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 }
-+(void)setHosts:(NSArray *)hostsArray{
-    hosts = [hostsArray copy];
+
+// Called when an NSURLConnection is prompted for HTTP authentication.
+- (void)connection:(NSURLConnection *)connection didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
+    if ([challenge previousFailureCount] > 1)
+    {
+        NSLog(@"auth failed");
+    }
+    else
+    {
+        NSURLCredential *cred = [[NSURLCredential alloc] initWithUser:usernameString password:passwordString persistence:NSURLCredentialPersistenceForSession];
+        [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
+    }
+}
+
+// Called when an NSURLConnection finishes loading.
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    isConnected = true;
+    NSLog(@"Connected!");
+    [self getServerStatusData];
+}
+
+// Called if an NSURLConnection fails.
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    NSLog(@"Could not authenticate to server.");
+}
+
+// Called after a successful connection to the Nagios server is made.
+- (void)getServerStatusData{
+    if(isConnected){
+        
+        NSLog(@"Getting data...");
+        
+        // Get status URL in string format for request and build URL.
+        NSString *urlString = [NSString stringWithFormat:@"%@",statusUrl];
+        NSURL *url = [NSURL URLWithString:urlString];
+        
+        // Open session and get data for request.
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        [[session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
+            
+            // Retrieve JSON data and store in NSDictionary object.
+            NSError *err = nil;
+            NSDictionary *hostData = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&err];
+            
+            // Array to contain all Host instances.
+            NSMutableArray *newHosts = [[NSMutableArray alloc] init];
+            
+            NSLog(@"Processing...");
+            
+            // Loop through hosts, creating a Host instance for each.
+            for(NSDictionary *host in hostData)
+            {
+                Host *newHost = [[Host alloc] initWithDictionary:host];
+                [newHosts addObject:newHost];
+            }
+            
+            NSLog(@"Retrieved service data for %lu host(s).",[hosts count]);
+            
+            // Update hosts array.
+            hosts = newHosts;
+            
+            // Reload table data.
+            [statusTable reloadData];
+            
+        }] resume];
+    }
 }
 
 /*
  * Methods called as the data source for the NSOutlineView.
  */
 -(NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item{
-    NSInteger retval = !item ? [hosts count] : [[item children] count];
-    NSLog(@"outlineView:numberOfChildrenOfItem runs, returning %lu",retval);
-    return retval;
+    return !item ? [hosts count] : [[item services] count];
 }
 
 -(BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item{
-    BOOL retval = !item ? NO : [[item children] count] != 0;
-    NSLog(@"outlineView:isItemExpandable runs, returning %d",retval);
-    return retval;
+    if(!item)
+        return NO;
+    else if([item respondsToSelector:@selector(services)] && [[item services] count] != 0)
+        return YES;
+    return NO;
 }
 
 -(id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item{
-    id retval = !item ? [hosts objectAtIndex:index] : [[item children] objectAtIndex:index];
-    NSLog(@"outlineView:child:ofItem runs, returning %@",retval);
-    return retval;
+    if(!item)
+        return [hosts objectAtIndex:index];
+    else if([item respondsToSelector:@selector(services)])
+        return [[item services] objectAtIndex:index];
+    return nil;
 }
 
 -(id)outlineView:(NSOutlineView *)outlineView objectValueForTableColumn:(NSTableColumn *)tableColumn byItem:(id)item{
-    NSLog(@"outlineView:objectValueForTableColumn:byItem runs for item:");
-    NSLog(@"%@",item);
-    if([[tableColumn identifier] isEqualToString:@"host_name"])
+    //NSLog(@"outlineView:objectValueForTableColumn:byItem runs for item:");
+    //NSLog(@"%@",[item name]);
+    if([[tableColumn identifier] isEqualToString:@"name"])
         return [item name];
     else if([[tableColumn identifier] isEqualToString:@"current_state"])
         return [item currentState];
-    else if([[tableColumn identifier] isEqualToString:@"attempt"])
-        return [item attempt];
-    else if([[tableColumn identifier] isEqualToString:@"last_updated"])
-        return [item lastUpdated];
+    else if([[tableColumn identifier] isEqualToString:@"current_attempt"])
+        return [item currentAttempt];
+    else if([[tableColumn identifier] isEqualToString:@"last_update"])
+        return [item lastUpdate];
     return @"Toasty!";
 }
 

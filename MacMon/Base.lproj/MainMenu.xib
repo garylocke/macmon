@@ -9,14 +9,18 @@
         <customObject id="-3" userLabel="Application"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
-                <outlet property="password" destination="55c-Rn-ccW" id="GNO-ww-m74"/>
-                <outlet property="serverUrl" destination="jd6-bL-Oxo" id="X1h-M2-hvU"/>
-                <outlet property="username" destination="ToE-hw-HoQ" id="usJ-Gn-5ar"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <customObject id="du1-a6-DNG" customClass="StatusViewController"/>
+        <customObject id="du1-a6-DNG" customClass="StatusViewController">
+            <connections>
+                <outlet property="password" destination="55c-Rn-ccW" id="WSt-kU-CjF"/>
+                <outlet property="serverUrl" destination="jd6-bL-Oxo" id="yu5-yw-si3"/>
+                <outlet property="statusTable" destination="l4j-Pu-4pT" id="5DB-57-JZu"/>
+                <outlet property="username" destination="ToE-hw-HoQ" id="g0Q-eR-9f6"/>
+            </connections>
+        </customObject>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="MacMon" id="1Xt-HY-uBw">
@@ -683,7 +687,7 @@
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="connect:" target="Voe-Tx-rLC" id="ZL2-QV-vkd"/>
+                            <action selector="connect:" target="du1-a6-DNG" id="Nae-XT-DXH"/>
                         </connections>
                     </button>
                     <textField verticalHuggingPriority="750" id="ToE-hw-HoQ">
@@ -730,7 +734,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="host_name" width="209.90234375" minWidth="16" maxWidth="1000" id="YAX-82-aiv">
+                                        <tableColumn identifier="name" width="209.90234375" minWidth="16" maxWidth="1000" id="YAX-82-aiv">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Host / Service">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -756,7 +760,7 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="attempt" width="75.34765625" minWidth="10" maxWidth="3.4028234663852886e+38" id="6bS-di-XD4">
+                                        <tableColumn identifier="current_attempt" width="75.34765625" minWidth="10" maxWidth="3.4028234663852886e+38" id="6bS-di-XD4">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Attempt">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -769,7 +773,7 @@
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
-                                        <tableColumn identifier="last_updated" width="77" minWidth="40" maxWidth="1000" id="Szb-67-Aba">
+                                        <tableColumn identifier="last_update" width="77" minWidth="40" maxWidth="1000" id="Szb-67-Aba">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Last Updated">
                                                 <font key="font" metaFont="smallSystem"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>

@@ -10,13 +10,11 @@
 
 @interface Service : NSObject
 
-@property (copy) NSString *hostName;
-@property (copy) NSString *serviceDescription;
+@property (copy) NSString *name;
 @property (copy) NSString *pluginOutput;
 @property (copy) NSString *currentState;
-@property (copy) NSString *currentStateDetails;
-@property (copy) NSString *attempt;
-@property (copy) NSString *lastUpdated;
+@property (copy) NSString *currentAttempt;
+@property (copy) NSString *lastUpdate;
 
 -(id)initWithDictionary:(NSDictionary *)serviceData;
 

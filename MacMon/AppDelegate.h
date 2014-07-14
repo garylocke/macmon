@@ -12,10 +12,4 @@
 
 @property (assign) IBOutlet NSWindow *window;
 
-@property (weak) IBOutlet NSTextField *serverUrl;
-@property (weak) IBOutlet NSTextField *username;
-@property (weak) IBOutlet NSSecureTextField *password;
-
-- (IBAction)connect:(id)sender;
-
 @end

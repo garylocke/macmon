@@ -10,9 +10,15 @@
 #import "Host.h"
 #import "Service.h"
 
-@interface StatusViewController : NSObject <NSOutlineViewDataSource>
+@interface StatusViewController : NSObject <NSOutlineViewDataSource>{
+    IBOutlet NSOutlineView* statusTable;
+}
 
-+(NSMutableArray *)hosts;
-+(void)setHosts:(NSMutableArray *)hostsArray;
+@property (nonatomic, retain) IBOutlet NSOutlineView* statusTable;
+@property (weak) IBOutlet NSTextField *serverUrl;
+@property (weak) IBOutlet NSTextField *username;
+@property (weak) IBOutlet NSSecureTextField *password;
+
+- (IBAction)connect:(id)sender;
 
 @end
