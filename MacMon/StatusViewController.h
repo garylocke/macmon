@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Host.h"
-#import "Service.h"
 
 @interface StatusViewController : NSObject <NSOutlineViewDataSource>{
     IBOutlet NSOutlineView* statusTable;

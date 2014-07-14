@@ -39,21 +39,20 @@ NSMutableArray *hosts;
         [host1Dict setObject:@"1" forKey:@"current_attempt"];
         [host1Dict setObject:@"00:00:00" forKey:@"last_update"];
         
-        Host *host1 = [[Host alloc] initWithDictionary:host1Dict];
-        
         // Sample dictionary of checks to add to host.
         NSMutableDictionary *serv1Dict = [[NSMutableDictionary alloc] initWithCapacity:4];
-        [serv1Dict setObject:@"service_description Service" forKey:@"Sample Service"];
-        [serv1Dict setObject:@"current_state" forKey:@"Bad"];
-        [serv1Dict setObject:@"current_attempt" forKey:@"3"];
-        [serv1Dict setObject:@"last_update" forKey:@"00:00:00"];
+        [serv1Dict setObject:@"Sample Service" forKey:@"service_description"];
+        [serv1Dict setObject:@"Bad" forKey:@"current_state"];
+        [serv1Dict setObject:@"3" forKey:@"current_attempt"];
+        [serv1Dict setObject:@"00:00:00" forKey:@"last_update"];
         
-        NSMutableArray *services = [NSMutableArray arrayWithObjects:
-                                    [[Host alloc] initWithDictionary:serv1Dict],
-                                    nil];
+        // Add sample service to sample host.
+        NSMutableArray *services = [NSMutableArray arrayWithObjects:serv1Dict, nil];
+        [host1Dict setObject:services forKey:@"services"];
         
-        // Adding checks array to sample host.
-        [host1 setServices:services];
+
+        // Create new sample host.
+        Host *host1 = [[Host alloc] initWithDictionary:host1Dict];
         
         // Add sample host to hosts array.
         [hosts addObject:host1];

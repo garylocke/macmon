@@ -45,10 +45,11 @@
                     [dict setObject:[service valueForKey:@"current_state"] forKey:@"current_state"];
                     [dict setObject:[service valueForKey:@"current_attempt"] forKey:@"current_attempt"];
                     [dict setObject:[service valueForKey:@"last_update"] forKey:@"last_update"];
-                    Service *service = [[Service alloc] initWithDictionary:dict];
-                    NSLog(@"Adding service: %@",service);
+                    Service *newService = [[Service alloc] initWithDictionary:dict];
                     
-                    [self.services addObject:service];
+                    //NSLog(@"Adding service: %@",newService);
+                    
+                    [self.services addObject:newService];
                 }
             }
         }
