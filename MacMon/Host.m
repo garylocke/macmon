@@ -37,11 +37,18 @@
             
             else if([key isEqualToString:@"services"]){
 
-                NSLog(@"Adding %lu services.",[[hostData valueForKey:key] count]);
+                //NSLog(@"Adding %lu service(s).",[[hostData valueForKey:key] count]);
                 
-                for(NSDictionary *service in [hostData valueForKey:key]){
+                // Sort services by current state.
+                NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"current_state" ascending:NO];
+                NSArray *descriptors = [NSArray arrayWithObject:sort];
+                NSArray *sortedServices = [[hostData valueForKey:key] sortedArrayUsingDescriptors:descriptors];
+                
+                // Create Service objects from sorted array of services.
+                for(NSDictionary *service in sortedServices){
                     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
                     [dict setObject:[service valueForKey:@"service_description"] forKey:@"service_description"];
+                    [dict setObject:[service valueForKey:@"plugin_output"] forKey:@"plugin_output"];
                     [dict setObject:[service valueForKey:@"current_state"] forKey:@"current_state"];
                     [dict setObject:[service valueForKey:@"current_attempt"] forKey:@"current_attempt"];
                     [dict setObject:[service valueForKey:@"last_update"] forKey:@"last_update"];

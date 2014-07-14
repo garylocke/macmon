@@ -19,7 +19,7 @@
                 self.name = [serviceData valueForKey:key];
             } else if([key isEqualToString:@"current_state"]){
                 self.currentState = [serviceData valueForKey:key];
-            } else if([key isEqualToString:@"plugin_ouput"]){
+            } else if([key isEqualToString:@"plugin_output"]){
                 self.pluginOutput = [serviceData valueForKey:key];
             }else if([key isEqualToString:@"current_attempt"]){
                 self.currentAttempt = [serviceData valueForKey:key];
