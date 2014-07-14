@@ -12,6 +12,8 @@
 
 NSURLConnection *urlConnection;
 
+NSTimer *statusUpdateTimer;
+
 NSString *serverUrlString;
 NSString *usernameString;
 NSString *passwordString;
@@ -28,6 +30,9 @@ NSMutableArray *hosts;
 -(id)init{
     self = [super init];
     if(self){
+        
+        // Create a status update timer.
+        statusUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getServerStatusData) userInfo:nil repeats:YES];
     
         // Array to store hosts.
         hosts = [[NSMutableArray alloc] init];
@@ -41,7 +46,7 @@ NSMutableArray *hosts;
         [host1Dict setObject:@"00:00:00" forKey:@"last_update"];
         
         // Sample dictionary of service details.
-        NSMutableDictionary *serv1Dict = [[NSMutableDictionary alloc] initWithCapacity:4];
+        NSMutableDictionary *serv1Dict = [[NSMutableDictionary alloc] initWithCapacity:5];
         [serv1Dict setObject:@"Sample Warning Service" forKey:@"service_description"];
         [serv1Dict setObject:@"WARNING: Service warning state." forKey:@"plugin_output"];
         [serv1Dict setObject:@"1" forKey:@"current_state"];
@@ -68,9 +73,6 @@ NSMutableArray *hosts;
         // Add sample host to hosts array.
         [hosts addObject:host1];
         
-        // Set update timer.
-        [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getServerStatusData:) userInfo:nil repeats:YES];
-    
     }
     return self;
 }

@@ -11,6 +11,8 @@
 @implementation AppDelegate
 
 // Called immediately after the app is loaded.
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification{}
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
+    NSLog(@"App started successfully.");
+}
 
 @end
