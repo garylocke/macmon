@@ -26,13 +26,13 @@ BOOL isConnected;
 
 NSMutableArray *hosts;
 
-// Initalize View Controller (should not happen until hosts/services arrays are populated).
+// Initalize View Controller.
 -(id)init{
     self = [super init];
     if(self){
         
         // Create a status update timer.
-        statusUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(getServerStatusData) userInfo:nil repeats:YES];
+        statusUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(getServerStatusData) userInfo:nil repeats:YES];
     
         // Array to store hosts.
         hosts = [[NSMutableArray alloc] init];
